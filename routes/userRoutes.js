@@ -16,7 +16,8 @@ userRouter.post(
                     name:user.name,
                     email:user.email,
                     isAdmin:user.isAdmin,
-                    token:user.generateToken,
+                    token:generateToken(user),
+                    
                 })
                 return;
             }
@@ -46,7 +47,7 @@ userRouter.post(
         name:user.name,
         email:user.email,
         isAdmin:user.isAdmin,
-        token:user.generateToken,
+        token:generateToken(user),
     })
    }) 
 )

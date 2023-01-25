@@ -6,7 +6,24 @@ const generateToken=(user)=>{
         expiresIn:'1d',
     })
 }
-module.exports={generateToken}
+const isAuth=(req,res,next)=>{
+    try{
+        const token = req.headers.authorization.split(" ")[1];
+        const verifyToken =  jwt.verify(token, process.env.JWT_SECRET,(err,decode)=>{
+            if(err){
+                res.status(401).send({message:"Invalid Token"})
+            }else{
+                req.user=decode;
+                next();
+            }
+        });
+        console.log(verifyToken)
+}catch(err){
+
+}
+
+}
+module.exports={generateToken,isAuth}
 
 
 /* _id:user._id,

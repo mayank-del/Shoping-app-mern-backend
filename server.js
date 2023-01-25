@@ -11,6 +11,7 @@ const productRouter=require("./routes/productRouter")
 
 const cors=require("cors")
 const userRouter = require("./routes/userRoutes")
+const orderRouter = require("./routes/orderRoutes")
 
 const app=express()
 app.use(express.json())
@@ -24,9 +25,15 @@ mongoose.connect(process.env.MONGODB_URI).then(()=>{
 }).catch(err=>{
     console.log(err.message)
 })
+
+app.get('/api/keys/paypal', (req, res) => {
+    res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+  });
+  
 app.use("/api/seed",seedRouter)
 app.use("/api/product",productRouter)
 app.use('/api/users',userRouter)
+app.use('/api/orders',orderRouter)
 
 app.get("/",(req,res)=>{
     console.log("Home page")

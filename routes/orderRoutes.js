@@ -6,6 +6,11 @@ const { Order } = require("../models/orderModel");
 
 const orderRouter=express.Router()
 
+orderRouter.get('/',async(req,res)=>{
+  const data=await Order.find({itemsPrice:820})
+  res.status(200).send({data:data})
+})
+
 orderRouter.post('/',isAuth,expressAsyncHandler(async(req,res)=>{
     const neworder=new Order({
         orderItems:req.body.orderItems.map((x)=>({...x,product:x._id})),
